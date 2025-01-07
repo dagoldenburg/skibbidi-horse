@@ -21,45 +21,43 @@ const config = {
         // REQUIRED — we use this to find the plan in the webhook (for instance if you want to update the user's credits based on the plan)
         priceId:
           process.env.NODE_ENV === "development"
-            ? "price_1Niyy5AxyNprDp7iZIqEyD2h"
+            ? "price_1QbKzHDk6tiSWnmq1KZXKgde"
             : "price_456",
         //  REQUIRED - Name of the plan, displayed on the pricing page
-        name: "Starter",
+        name: "Tier 1 Subscription",
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
-        description: "Perfect for small projects",
+        description: "Subscription for horse data service",
         // The price you want to display, the one user will be charged on Stripe.
-        price: 79,
+        price: 249,
         // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
-        priceAnchor: 99,
+        //priceAnchor: 99,
         features: [
-          {
-            name: "NextJS boilerplate",
-          },
-          { name: "User oauth" },
-          { name: "Database" },
-          { name: "Emails" },
+          { name: "Access to our balanced betting model" },
+          { name: "Tips for each race" },
         ],
       },
       {
-        // This plan will look different on the pricing page, it will be highlighted. You can only have one plan with isFeatured: true
-        isFeatured: true,
+        // REQUIRED — we use this to find the plan in the webhook (for instance if you want to update the user's credits based on the plan)
         priceId:
           process.env.NODE_ENV === "development"
-            ? "price_1O5KtcAxyNprDp7iftKnrrpw"
+            ? "price_1QeFtkDk6tiSWnmqozrOLDit"
             : "price_456",
-        name: "Advanced",
-        description: "You need more power",
-        price: 99,
-        priceAnchor: 149,
+        //  REQUIRED - Name of the plan, displayed on the pricing page
+        name: "Tier 2 Subscription",
+        // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
+        description: "Subscription for horse data service",
+        // The price you want to display, the one user will be charged on Stripe.
+        price: 499,
+        // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
+        //priceAnchor: 99,
         features: [
           {
-            name: "NextJS boilerplate",
+            name: "Access to raw SQL database",
           },
-          { name: "User oauth" },
-          { name: "Database" },
-          { name: "Emails" },
-          { name: "1 year of updates" },
-          { name: "24/7 support" },
+          { name: "Access to our high risk high reward betting model" },
+          { name: "Access to our balanced betting model" },
+          { name: "Access to our low risk low reward betting model" },
+          { name: "Tips for each race" },
         ],
       },
     ],

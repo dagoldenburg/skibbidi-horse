@@ -17,6 +17,8 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 export async function POST(req) {
   const body = await req.text();
 
+  //console.log("body " + JSON.stringify(body));
+
   const signature = headers().get("stripe-signature");
 
   let eventType;
@@ -46,6 +48,8 @@ export async function POST(req) {
         const stripeObject = event.data.object;
 
         const session = await findCheckoutSession(stripeObject.id);
+
+        console.log("session " + JSON.stringify(session));
 
         const customerId = session?.customer;
         const priceId = session?.line_items?.data[0]?.price.id;
@@ -79,20 +83,25 @@ export async function POST(req) {
           const { data: profile } = await supabase
             .from("profiles")
             .select("*")
-            .eq("id", userId)
+            .eq("user_id", userId)
             .single();
 
           user = profile;
         }
 
+        const accessUntilDate = new Date();
+        accessUntilDate.setDate(accessUntilDate.getDate() + 30);
+
+        console.log("user " + JSON.stringify(user));
         await supabase
           .from("profiles")
           .update({
             customer_id: customerId,
             price_id: priceId,
-            has_access: true,
+            has_access_until: accessUntilDate,
+            name: customer.name,
           })
-          .eq("id", user?.id);
+          .eq("user_id", user?.user_id);
 
         // Extra: send email with user link, product page, etc...
         // try {
@@ -127,7 +136,7 @@ export async function POST(req) {
 
         await supabase
           .from("profiles")
-          .update({ has_access: false })
+          .update({ has_access_until: null })
           .eq("customer_id", subscription.customer);
         break;
       }
@@ -150,9 +159,12 @@ export async function POST(req) {
         if (profile.price_id !== priceId) break;
 
         // Grant the profile access to your product. It's a boolean in the database, but could be a number of credits, etc...
+        const accessUntilDate = new Date();
+        accessUntilDate.setDate(accessUntilDate.getDate() + 30);
+
         await supabase
           .from("profiles")
-          .update({ has_access: true })
+          .update({ has_access_until: accessUntilDate })
           .eq("customer_id", customerId);
 
         break;
