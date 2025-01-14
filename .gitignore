@@ -40,5 +40,5 @@ public/sitemap.xml
 public/sitemap-0.xml
 
 # ignore raw data
-backend-scrape-db/data/*
+**/data/raw/*
 **/node_modules
