@@ -1,0 +1,22 @@
+{
+  "name": "horse-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scrape": "node src/cli.js scrape",
+    "parse": "node src/cli.js parse"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Horse racing data scraper and analyzer",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.22.0",
+    "axios": "^1.6.2",
+    "better-sqlite3": "^11.7.0",
+    "commander": "^11.1.0",
+    "date-fns": "^3.0.6",
+    "fs-extra": "^11.2.0"
+  }
+}
