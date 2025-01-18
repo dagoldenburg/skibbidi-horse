@@ -49,8 +49,6 @@ export async function POST(req) {
 
         const session = await findCheckoutSession(stripeObject.id);
 
-        console.log("session " + JSON.stringify(session));
-
         const customerId = session?.customer;
         const priceId = session?.line_items?.data[0]?.price.id;
         const userId = stripeObject.client_reference_id;
@@ -70,13 +68,6 @@ export async function POST(req) {
             .single();
           if (profile) {
             user = profile;
-          } else {
-            // create a new user using supabase auth admin
-            const { data } = await supabase.auth.admin.createUser({
-              email: customer.email,
-            });
-
-            user = data?.user;
           }
         } else {
           // find user by ID
@@ -92,7 +83,6 @@ export async function POST(req) {
         const accessUntilDate = new Date();
         accessUntilDate.setDate(accessUntilDate.getDate() + 30);
 
-        console.log("user " + JSON.stringify(user));
         await supabase
           .from("profiles")
           .update({

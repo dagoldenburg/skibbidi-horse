@@ -1,33 +1,31 @@
-import { Inter } from "next/font/google";
-import { getSEOTags } from "@/libs/seo";
-import ClientLayout from "@/components/LayoutClient";
-import config from "@/config";
+'use client'
+
+import {Inter} from "next/font/google";
 import "./globals.css";
+import MainLayout from "@/layouts/mainLayout";
+import ClientLayout from "@/components/LayoutClient";
+import CssBaseline from "@mui/material/CssBaseline";
+import {ThemeProvider} from "@mui/material/styles";
+import {theme} from '@/styles/theme';
 
-const font = Inter({ subsets: ["latin"] });
+const font = Inter({subsets: ["latin"]});
 
-export const viewport = {
-	// Will use the primary color of your theme to show a nice theme color in the URL bar of supported browsers
-	themeColor: config.colors.main,
-	width: "device-width",
-	initialScale: 1,
-};
-
-// This adds default SEO tags to all pages in our app.
-// You can override them in each page passing params to getSOTags() function.
-export const metadata = getSEOTags();
-
-export default function RootLayout({ children }) {
-	return (
-		<html
-			lang="en"
-			data-theme={config.colors.theme}
-			className={font.className}
-		>
-			<body>
-				{/* ClientLayout contains all the client wrappers (Crisp chat support, toast messages, tooltips, etc.) */}
-				<ClientLayout>{children}</ClientLayout>
-			</body>
-		</html>
-	);
+export default function RootLayout({children}) {
+  return (
+      <html
+          lang="en"
+          className={font.className}
+      >
+      <body>
+      <ThemeProvider theme={theme}>
+        <CssBaseline/>
+        <ClientLayout>
+          <MainLayout>
+            {children}
+          </MainLayout>
+        </ClientLayout>
+      </ThemeProvider>
+      </body>
+      </html>
+  );
 }
