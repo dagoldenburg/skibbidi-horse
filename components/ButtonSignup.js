@@ -29,6 +29,11 @@ const ButtonSignup = () => {
       return;
     }
 
+    if (password.length < 6) {
+      setPasswordError("Lösenordet måste vara minst 6 tecken långt");
+      return;
+    }
+
     if (password !== confirmPassword) {
       setPasswordError("Lösenorden matchar inte");
       return;
