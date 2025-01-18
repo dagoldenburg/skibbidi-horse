@@ -24,16 +24,20 @@ const config = {
             ? "price_1QbKzHDk6tiSWnmq1KZXKgde"
             : "price_456",
         //  REQUIRED - Name of the plan, displayed on the pricing page
-        name: "Tier 1 Subscription",
+        name: "Standard",
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
-        description: "Subscription for horse data service",
+        description: 'Perfekt för hobbytravare',
         // The price you want to display, the one user will be charged on Stripe.
         price: 249,
+        recurrance: 'månad',
         // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
         //priceAnchor: 99,
         features: [
-          { name: "Access to our balanced betting model" },
-          { name: "Tips for each race" },
+          { name: 'AI-analyser för V75 och V86' },
+          { name: 'Detaljerade insikter för varje lopp' },
+          { name: 'Tidiga analyser' },
+          { name: 'Statistik och trender' },
+          { name: 'Obegränsad tillgång till historiska resultat' }
         ],
       },
       {
@@ -43,23 +47,72 @@ const config = {
             ? "price_1QeFtkDk6tiSWnmqozrOLDit"
             : "price_456",
         //  REQUIRED - Name of the plan, displayed on the pricing page
-        name: "Tier 2 Subscription",
+        name: "Premium",
+        recommended: true,
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
-        description: "Subscription for horse data service",
+        description: 'För den seriösa spelaren',
         // The price you want to display, the one user will be charged on Stripe.
         price: 499,
+        recurrance: 'månad',
         // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
         //priceAnchor: 99,
         features: [
-          {
-            name: "Access to raw SQL database",
-          },
-          { name: "Access to our high risk high reward betting model" },
-          { name: "Access to our balanced betting model" },
-          { name: "Access to our low risk low reward betting model" },
-          { name: "Tips for each race" },
+          { name: 'Allt i Standard'},
+          { name: 'Avancerad spelstrategier'},
+          { name: 'Prioriterad kundsupport'},
+          { name: 'Exklusiva insikter'},
+          { name: 'Djupgående statistik och trender'},
+          { name: 'Tidiga prediktioner'},
         ],
       },
+        {
+          // REQUIRED — we use this to find the plan in the webhook (for instance if you want to update the user's credits based on the plan)
+          priceId:
+            process.env.NODE_ENV === "development"
+              ? "price_1QihxtDk6tiSWnmql7TRLPGF"
+              : "price_456",
+          //  REQUIRED - Name of the plan, displayed on the pricing page
+          name: "Standard",
+          // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
+          description: 'Perfekt för hobbytravare',
+          // The price you want to display, the one user will be charged on Stripe.
+          price: 2390,
+          recurrance: 'år',
+          // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
+          //priceAnchor: 99,
+          features: [
+            { name: 'AI-analyser för V75 och V86' },
+            { name: 'Detaljerade insikter för varje lopp' },
+            { name: 'Tidiga analyser' },
+            { name: 'Statistik och trender' },
+            { name: 'Obegränsad tillgång till historiska resultat' }
+          ],
+        },
+        {
+          // REQUIRED — we use this to find the plan in the webhook (for instance if you want to update the user's credits based on the plan)
+          priceId:
+            process.env.NODE_ENV === "development"
+              ? "price_1QihyWDk6tiSWnmqlskpRSkt"
+              : "price_456",
+          //  REQUIRED - Name of the plan, displayed on the pricing page
+          name: "Premium",
+          recommended: true,
+          // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
+          description: 'För den seriösa spelaren',
+          // The price you want to display, the one user will be charged on Stripe.
+          price: 4790,
+          recurrance: 'år',
+          // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
+          //priceAnchor: 99,
+          features: [
+            { name: 'Allt i Standard'},
+            { name: 'Avancerad spelstrategier'},
+            { name: 'Prioriterad kundsupport'},
+            { name: 'Exklusiva insikter'},
+            { name: 'Djupgående statistik och trender'},
+            { name: 'Tidiga prediktioner'},
+          ],
+        },
     ],
   },
   aws: {

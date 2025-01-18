@@ -24,7 +24,7 @@ export default function MainLayout({ children }) {
       const { data: { session } } = await supabase.auth.getSession();
       setIsLoggedIn(!!session);
     };
-
+//todo fixa så vi inte gör call varje gång
     getSession();
   }, []);
 

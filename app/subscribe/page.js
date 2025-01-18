@@ -4,57 +4,30 @@ import { Container, Box, Typography, Paper, Button, Divider, Switch, FormControl
 import CheckIcon from '@mui/icons-material/Check';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@mui/material/styles';
+import config from '@/config';
+import ButtonCheckout from '@/components/ButtonCheckout';
 
 export default function SubscribePage() {
   const router = useRouter();
   const [isYearly, setIsYearly] = useState(false);
   const theme = useTheme();
 
-  const tiers = [
-    {
-      name: 'Standard',
-      price: isYearly ? '79' : '99',
-      period: isYearly ? '/mån' : '/månad',
+  const tiers = config.stripe.plans
+    // Filter plans based on billing period
+    .filter(plan => isYearly ? plan.recurrance === 'år' : plan.recurrance === 'månad')
+    .map(plan => ({
+      priceId: plan.priceId,
+      name: plan.name,
+      price: plan.price,
+      recurrance: plan.recurrance,
       billing: isYearly ? 'vid årlig betalning' : 'månadsvis betalning',
-      description: 'Perfekt för hobbytravare',
-      features: [
-        'AI-analyser för V75 och V86',
-        'Detaljerade insikter för varje lopp',
-        'Tidiga analyser',
-        'Statistik och trender',
-        'Obegränsad tillgång till historiska resultat'
-      ],
-      buttonText: 'Välj Standard',
-      color: theme.palette.primary.main,
-      bgColor: theme.palette.background.paper,
-    },
-    {
-      name: 'Premium',
-      price: isYearly ? '159' : '199',
-      period: isYearly ? '/mån' : '/månad',
-      billing: isYearly ? 'vid årlig betalning' : 'månadsvis betalning',
-      description: 'För den seriösa spelaren',
-      features: [
-        'Allt i Standard',
-        'Avancerad spelstrategier',
-        'Prioriterad kundsupport',
-        'Exklusiva insikter',
-        'Djupgående statistik och trender',
-        'Tidiga prediktioner',
-      ],
-      buttonText: 'Välj Premium',
-      buttonTextColor: theme.palette.text.primary,
-      color: theme.palette.background.paper,
-      bgColor: theme.palette.primary.main,
-      recommended: true,
-    },
-  ];
-
-  const handleSubscribe = (tier) => {
-    // Handle subscription logic here
-    console.log(`Subscribing to ${tier} plan`);
-    // Redirect to payment page or handle subscription flow
-  };
+      description: plan.description,
+      features: plan.features.map(feature => feature.name),
+      buttonText: `Välj ${plan.name}`,
+      color: plan.recommended ? theme.palette.background.paper : theme.palette.primary.main,
+      bgColor: plan.recommended ? theme.palette.primary.main : theme.palette.background.paper,
+      recommended: plan.recommended,
+    }));
 
   return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -177,7 +150,7 @@ export default function SubscribePage() {
                         {tier.price}kr
                       </Typography>
                       <Typography sx={{ color: tier.color, opacity: 0.8 }}>
-                        {tier.period}
+                        /{tier.recurrance}
                       </Typography>
                     </Box>
                     <Typography sx={{ color: tier.color, opacity: 0.7, fontSize: '0.875rem' }}>
@@ -198,30 +171,7 @@ export default function SubscribePage() {
                     ))}
                   </Box>
                 </Box>
-
-                <Button
-                    variant={tier.recommended ? 'contained' : 'outlined'}
-                    fullWidth
-                    onClick={() => handleSubscribe(tier.name)}
-                    sx={{
-                      py: 2,
-                      borderRadius: 2,
-                      fontSize: '1rem',
-                      fontWeight: 600,
-                      color: tier.recommended ? theme.palette.primary.main : tier.color,
-                      borderColor: tier.color,
-                      bgcolor: tier.recommended ? tier.color : 'transparent',
-                      mt: 'auto',
-                      '&:hover': {
-                        bgcolor: tier.recommended ? theme.palette.primary.light : `${theme.palette.primary.main}10`,
-                        borderColor: tier.recommended ? 'transparent' : tier.color,
-                        transform: 'translateY(-2px)',
-                        color: tier.recommended ? theme.palette.common.white : tier.color,
-                      },
-                    }}
-                >
-                  {tier.buttonText}
-                </Button>
+                <ButtonCheckout mode="subscription" tier={tier} />
               </Paper>
           ))}
         </Box>

@@ -19,11 +19,11 @@ export default function RootLayout({children}) {
       <body>
       <ThemeProvider theme={theme}>
         <CssBaseline/>
-        <ClientLayout>
           <MainLayout>
+        <ClientLayout>
             {children}
-          </MainLayout>
         </ClientLayout>
+          </MainLayout>
       </ThemeProvider>
       </body>
       </html>
